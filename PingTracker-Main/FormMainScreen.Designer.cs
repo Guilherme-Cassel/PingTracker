@@ -1,6 +1,6 @@
 ﻿namespace PingTracker_Main
 {
-    partial class Form1
+    partial class FormMainScreen
     {
         /// <summary>
         ///  Required designer variable.
