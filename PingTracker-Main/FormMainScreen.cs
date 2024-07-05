@@ -6,5 +6,10 @@ namespace PingTracker_Main
         {
             InitializeComponent();
         }
+
+        private void Button_AddAddress_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(MaskedTextBox_AddAddress.Text);
+        }
     }
 }
