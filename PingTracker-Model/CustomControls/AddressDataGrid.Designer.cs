@@ -1,6 +1,6 @@
-﻿namespace PingTracker
+﻿namespace PingTracker_Model.CustomControls
 {
-    partial class AddressListView : ListView
+    partial class AddressDataGrid : DataGridView
     {
         /// <summary> 
         /// Required designer variable.

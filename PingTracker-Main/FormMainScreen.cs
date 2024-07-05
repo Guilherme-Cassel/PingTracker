@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Net;
 
 namespace PingTracker
 {
@@ -8,7 +9,7 @@ namespace PingTracker
         {
             InitializeComponent();
 
-            Button_AddAddress.Click += Button_AddAddress_Click1;
+            Button_AddAddress.Click += Button_AddAddress_Click;
         }
 
         public void InitializeBinding()
@@ -17,16 +18,32 @@ namespace PingTracker
             //ListView_Addresses.DataBindings.Add(BindingSource_ListView);
         }
 
-        private void Button_AddAddress_Click1(object? sender, EventArgs e)
+        private async void Button_AddAddress_Click(object? sender, EventArgs e)
         {
-            var textbox = MaskedTextBox_AddAddress;
+            MaskedTextBox_AddAddress.ReadOnly = true;
+            Button_AddAddress.Enabled = false;
 
-            if (textbox.Text is not string ip)
+            if (MaskedTextBox_AddAddress.Text is not string ip)
                 return;
 
-            //AddressesListView.Addresses.Add(new(ip, "dasd"));
+            try
+            {
+                IPAddress addr = IPAddress.Parse(ip);
+                IPHostEntry entry = await Dns.GetHostEntryAsync(addr);
 
-            textbox.Text = string.Empty;
+                MessageBox.Show(entry.HostName);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Erro Capturado");
+            }
+            finally
+            {
+                MaskedTextBox_AddAddress.Text = string.Empty;
+            }
+
+            MaskedTextBox_AddAddress.ReadOnly = false;
+            Button_AddAddress.Enabled = true;
         }
 
         private void FormMainScreen_Load(object sender, EventArgs e)
