@@ -1,11 +1,10 @@
-namespace PingTracker_Main
+namespace PingTracker;
+
+static class Program
 {
-    static class Program
+    static void Main()
     {
-        static void Main()
-        {
-            ApplicationConfiguration.Initialize();
-            Application.Run(new FormMainScreen());
-        }
+        ApplicationConfiguration.Initialize();
+        Application.Run(new FormMainScreen());
     }
 }

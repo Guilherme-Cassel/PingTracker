@@ -1,4 +1,4 @@
-﻿namespace PingTracker_Main
+﻿namespace PingTracker
 {
     partial class FormMainScreen
     {
@@ -28,20 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ListView_Addresses = new ListView();
+            components = new System.ComponentModel.Container();
             RichTextBox_Log = new RichTextBox();
             Button_AddAddress = new Button();
             MaskedTextBox_AddAddress = new MaskedTextBox();
+            BindingSource_ListView = new BindingSource(components);
+            bindingSource1 = new BindingSource(components);
+            addressListView1 = new AddressListView();
+            ((System.ComponentModel.ISupportInitialize)BindingSource_ListView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             SuspendLayout();
-            // 
-            // ListView_Addresses
-            // 
-            ListView_Addresses.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            ListView_Addresses.Location = new Point(12, 12);
-            ListView_Addresses.Name = "ListView_Addresses";
-            ListView_Addresses.Size = new Size(253, 537);
-            ListView_Addresses.TabIndex = 0;
-            ListView_Addresses.UseCompatibleStateImageBehavior = false;
             // 
             // RichTextBox_Log
             // 
@@ -60,7 +56,6 @@
             Button_AddAddress.TabIndex = 1;
             Button_AddAddress.Text = "Add Address";
             Button_AddAddress.UseVisualStyleBackColor = true;
-            Button_AddAddress.Click += Button_AddAddress_Click;
             // 
             // MaskedTextBox_AddAddress
             // 
@@ -71,28 +66,41 @@
             MaskedTextBox_AddAddress.Size = new Size(124, 29);
             MaskedTextBox_AddAddress.TabIndex = 0;
             // 
+            // addressListView1
+            // 
+            addressListView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            addressListView1.Location = new Point(12, 12);
+            addressListView1.Name = "addressListView1";
+            addressListView1.Size = new Size(255, 537);
+            addressListView1.TabIndex = 2;
+            addressListView1.UseCompatibleStateImageBehavior = false;
+            // 
             // FormMainScreen
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(984, 561);
+            Controls.Add(addressListView1);
             Controls.Add(MaskedTextBox_AddAddress);
             Controls.Add(Button_AddAddress);
             Controls.Add(RichTextBox_Log);
-            Controls.Add(ListView_Addresses);
             Name = "FormMainScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PingTracker";
+            Load += FormMainScreen_Load;
+            ((System.ComponentModel.ISupportInitialize)BindingSource_ListView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private ListView ListView_Addresses;
         private RichTextBox RichTextBox_Log;
         private Button Button_AddAddress;
         private MaskedTextBox MaskedTextBox_AddAddress;
+        private BindingSource BindingSource_ListView;
+        private BindingSource bindingSource1;
+        private AddressListView addressListView1;
     }
 }
