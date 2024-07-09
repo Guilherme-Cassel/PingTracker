@@ -32,25 +32,22 @@
             RichTextBox_Log = new RichTextBox();
             Button_AddAddress = new Button();
             MaskedTextBox_AddAddress = new MaskedTextBox();
-            addressDataGrid1 = new PingTracker_Model.CustomControls.AddressDataGrid();
-            addressFamilyDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            scopeIdDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            isIPv6MulticastDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isIPv6LinkLocalDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isIPv6SiteLocalDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isIPv6TeredoDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isIPv6UniqueLocalDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            isIPv4MappedToIPv6DataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
-            addressDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            ((System.ComponentModel.ISupportInitialize)addressDataGrid1).BeginInit();
+            ipDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            dnsNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            AddressesDataGrid = new DataGridView();
+            ipDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dnsNameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            AddressBindingSource = new BindingSource(components);
+            ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)AddressBindingSource).BeginInit();
             SuspendLayout();
             // 
             // RichTextBox_Log
             // 
             RichTextBox_Log.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            RichTextBox_Log.Location = new Point(278, 295);
+            RichTextBox_Log.Location = new Point(278, 108);
             RichTextBox_Log.Name = "RichTextBox_Log";
-            RichTextBox_Log.Size = new Size(694, 254);
+            RichTextBox_Log.Size = new Size(644, 291);
             RichTextBox_Log.TabIndex = 1;
             RichTextBox_Log.Text = "";
             // 
@@ -72,97 +69,78 @@
             MaskedTextBox_AddAddress.Size = new Size(124, 29);
             MaskedTextBox_AddAddress.TabIndex = 0;
             // 
-            // addressDataGrid1
+            // ipDataGridViewTextBoxColumn
             // 
-            addressDataGrid1.AllowUserToAddRows = false;
-            addressDataGrid1.AllowUserToDeleteRows = false;
-            addressDataGrid1.AutoGenerateColumns = false;
-            addressDataGrid1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            addressDataGrid1.Columns.AddRange(new DataGridViewColumn[] { addressFamilyDataGridViewTextBoxColumn, scopeIdDataGridViewTextBoxColumn, isIPv6MulticastDataGridViewCheckBoxColumn, isIPv6LinkLocalDataGridViewCheckBoxColumn, isIPv6SiteLocalDataGridViewCheckBoxColumn, isIPv6TeredoDataGridViewCheckBoxColumn, isIPv6UniqueLocalDataGridViewCheckBoxColumn, isIPv4MappedToIPv6DataGridViewCheckBoxColumn, addressDataGridViewTextBoxColumn });
-            addressDataGrid1.Location = new Point(11, 9);
-            addressDataGrid1.Name = "addressDataGrid1";
-            addressDataGrid1.ReadOnly = true;
-            addressDataGrid1.Size = new Size(255, 539);
-            addressDataGrid1.TabIndex = 2;
+            ipDataGridViewTextBoxColumn.DataPropertyName = "Ip";
+            ipDataGridViewTextBoxColumn.HeaderText = "Ip";
+            ipDataGridViewTextBoxColumn.Name = "ipDataGridViewTextBoxColumn";
+            ipDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // addressFamilyDataGridViewTextBoxColumn
+            // dnsNameDataGridViewTextBoxColumn
             // 
-            addressFamilyDataGridViewTextBoxColumn.DataPropertyName = "AddressFamily";
-            addressFamilyDataGridViewTextBoxColumn.HeaderText = "AddressFamily";
-            addressFamilyDataGridViewTextBoxColumn.Name = "addressFamilyDataGridViewTextBoxColumn";
-            addressFamilyDataGridViewTextBoxColumn.ReadOnly = true;
+            dnsNameDataGridViewTextBoxColumn.DataPropertyName = "DnsName";
+            dnsNameDataGridViewTextBoxColumn.HeaderText = "DnsName";
+            dnsNameDataGridViewTextBoxColumn.Name = "dnsNameDataGridViewTextBoxColumn";
+            dnsNameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // scopeIdDataGridViewTextBoxColumn
+            // AddressesDataGrid
             // 
-            scopeIdDataGridViewTextBoxColumn.DataPropertyName = "ScopeId";
-            scopeIdDataGridViewTextBoxColumn.HeaderText = "ScopeId";
-            scopeIdDataGridViewTextBoxColumn.Name = "scopeIdDataGridViewTextBoxColumn";
-            scopeIdDataGridViewTextBoxColumn.ReadOnly = true;
+            AddressesDataGrid.AllowUserToAddRows = false;
+            AddressesDataGrid.AllowUserToDeleteRows = false;
+            AddressesDataGrid.AllowUserToResizeRows = false;
+            AddressesDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            AddressesDataGrid.AutoGenerateColumns = false;
+            AddressesDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+            AddressesDataGrid.BackgroundColor = Color.White;
+            AddressesDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            AddressesDataGrid.Columns.AddRange(new DataGridViewColumn[] { ipDataGridViewTextBoxColumn1, dnsNameDataGridViewTextBoxColumn1 });
+            AddressesDataGrid.DataSource = AddressBindingSource;
+            AddressesDataGrid.Location = new Point(12, 20);
+            AddressesDataGrid.Name = "AddressesDataGrid";
+            AddressesDataGrid.ReadOnly = true;
+            AddressesDataGrid.RowHeadersVisible = false;
+            AddressesDataGrid.ScrollBars = ScrollBars.Vertical;
+            AddressesDataGrid.Size = new Size(257, 379);
+            AddressesDataGrid.TabIndex = 2;
             // 
-            // isIPv6MulticastDataGridViewCheckBoxColumn
+            // ipDataGridViewTextBoxColumn1
             // 
-            isIPv6MulticastDataGridViewCheckBoxColumn.DataPropertyName = "IsIPv6Multicast";
-            isIPv6MulticastDataGridViewCheckBoxColumn.HeaderText = "IsIPv6Multicast";
-            isIPv6MulticastDataGridViewCheckBoxColumn.Name = "isIPv6MulticastDataGridViewCheckBoxColumn";
-            isIPv6MulticastDataGridViewCheckBoxColumn.ReadOnly = true;
+            ipDataGridViewTextBoxColumn1.DataPropertyName = "Ip";
+            ipDataGridViewTextBoxColumn1.HeaderText = "Ip";
+            ipDataGridViewTextBoxColumn1.MaxInputLength = 20;
+            ipDataGridViewTextBoxColumn1.MinimumWidth = 90;
+            ipDataGridViewTextBoxColumn1.Name = "ipDataGridViewTextBoxColumn1";
+            ipDataGridViewTextBoxColumn1.ReadOnly = true;
+            ipDataGridViewTextBoxColumn1.Width = 90;
             // 
-            // isIPv6LinkLocalDataGridViewCheckBoxColumn
+            // dnsNameDataGridViewTextBoxColumn1
             // 
-            isIPv6LinkLocalDataGridViewCheckBoxColumn.DataPropertyName = "IsIPv6LinkLocal";
-            isIPv6LinkLocalDataGridViewCheckBoxColumn.HeaderText = "IsIPv6LinkLocal";
-            isIPv6LinkLocalDataGridViewCheckBoxColumn.Name = "isIPv6LinkLocalDataGridViewCheckBoxColumn";
-            isIPv6LinkLocalDataGridViewCheckBoxColumn.ReadOnly = true;
+            dnsNameDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            dnsNameDataGridViewTextBoxColumn1.DataPropertyName = "DnsName";
+            dnsNameDataGridViewTextBoxColumn1.HeaderText = "DnsName";
+            dnsNameDataGridViewTextBoxColumn1.MaxInputLength = 25;
+            dnsNameDataGridViewTextBoxColumn1.Name = "dnsNameDataGridViewTextBoxColumn1";
+            dnsNameDataGridViewTextBoxColumn1.ReadOnly = true;
             // 
-            // isIPv6SiteLocalDataGridViewCheckBoxColumn
+            // AddressBindingSource
             // 
-            isIPv6SiteLocalDataGridViewCheckBoxColumn.DataPropertyName = "IsIPv6SiteLocal";
-            isIPv6SiteLocalDataGridViewCheckBoxColumn.HeaderText = "IsIPv6SiteLocal";
-            isIPv6SiteLocalDataGridViewCheckBoxColumn.Name = "isIPv6SiteLocalDataGridViewCheckBoxColumn";
-            isIPv6SiteLocalDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // isIPv6TeredoDataGridViewCheckBoxColumn
-            // 
-            isIPv6TeredoDataGridViewCheckBoxColumn.DataPropertyName = "IsIPv6Teredo";
-            isIPv6TeredoDataGridViewCheckBoxColumn.HeaderText = "IsIPv6Teredo";
-            isIPv6TeredoDataGridViewCheckBoxColumn.Name = "isIPv6TeredoDataGridViewCheckBoxColumn";
-            isIPv6TeredoDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // isIPv6UniqueLocalDataGridViewCheckBoxColumn
-            // 
-            isIPv6UniqueLocalDataGridViewCheckBoxColumn.DataPropertyName = "IsIPv6UniqueLocal";
-            isIPv6UniqueLocalDataGridViewCheckBoxColumn.HeaderText = "IsIPv6UniqueLocal";
-            isIPv6UniqueLocalDataGridViewCheckBoxColumn.Name = "isIPv6UniqueLocalDataGridViewCheckBoxColumn";
-            isIPv6UniqueLocalDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // isIPv4MappedToIPv6DataGridViewCheckBoxColumn
-            // 
-            isIPv4MappedToIPv6DataGridViewCheckBoxColumn.DataPropertyName = "IsIPv4MappedToIPv6";
-            isIPv4MappedToIPv6DataGridViewCheckBoxColumn.HeaderText = "IsIPv4MappedToIPv6";
-            isIPv4MappedToIPv6DataGridViewCheckBoxColumn.Name = "isIPv4MappedToIPv6DataGridViewCheckBoxColumn";
-            isIPv4MappedToIPv6DataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // addressDataGridViewTextBoxColumn
-            // 
-            addressDataGridViewTextBoxColumn.DataPropertyName = "Address";
-            addressDataGridViewTextBoxColumn.HeaderText = "Address";
-            addressDataGridViewTextBoxColumn.Name = "addressDataGridViewTextBoxColumn";
-            addressDataGridViewTextBoxColumn.ReadOnly = true;
+            AddressBindingSource.DataSource = typeof(Address);
             // 
             // FormMainScreen
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(984, 561);
-            Controls.Add(addressDataGrid1);
+            ClientSize = new Size(934, 411);
+            Controls.Add(AddressesDataGrid);
             Controls.Add(MaskedTextBox_AddAddress);
             Controls.Add(Button_AddAddress);
             Controls.Add(RichTextBox_Log);
             Name = "FormMainScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PingTracker";
-            Load += FormMainScreen_Load;
-            ((System.ComponentModel.ISupportInitialize)addressDataGrid1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).EndInit();
+            ((System.ComponentModel.ISupportInitialize)AddressBindingSource).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -171,16 +149,11 @@
         private RichTextBox RichTextBox_Log;
         private Button Button_AddAddress;
         private MaskedTextBox MaskedTextBox_AddAddress;
-        private PingTracker_Model.CustomControls.AddressDataGrid addressDataGrid1;
-        private DataGridViewTextBoxColumn addressFamilyDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn scopeIdDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn isIPv6MulticastDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isIPv6LinkLocalDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isIPv6SiteLocalDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isIPv6TeredoDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isIPv6UniqueLocalDataGridViewCheckBoxColumn;
-        private DataGridViewCheckBoxColumn isIPv4MappedToIPv6DataGridViewCheckBoxColumn;
-        private DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
-        private AddressListView addressListView1;
+        private DataGridViewTextBoxColumn ipDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn;
+        private DataGridView AddressesDataGrid;
+        private DataGridViewTextBoxColumn ipDataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn1;
+        private BindingSource AddressBindingSource;
     }
 }

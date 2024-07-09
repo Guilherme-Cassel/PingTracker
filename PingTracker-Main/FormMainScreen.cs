@@ -1,54 +1,60 @@
 using System.ComponentModel;
-using System.Net;
 
-namespace PingTracker
+namespace PingTracker;
+
+public partial class FormMainScreen : Form
 {
-    public partial class FormMainScreen : Form
+    public static BindingList<Address> Addresses = [];
+
+    public FormMainScreen()
     {
-        public FormMainScreen()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            Button_AddAddress.Click += Button_AddAddress_Click;
+        AddressBindingSource.DataSource = Addresses;
+
+        Button_AddAddress.Click += Button_AddAddress_Click;
+
+        InitializePing();
+    }
+
+    private async void InitializePing()
+    {
+        try
+        {
+            foreach (var address in Addresses)
+            {
+                if (address.StartPing().IsCompleted)
+                    await address.StartPing();
+            }
         }
-
-        public void InitializeBinding()
+        catch
         {
-            //BindingSource_ListView.DataSource = Addresses;
-            //ListView_Addresses.DataBindings.Add(BindingSource_ListView);
+            throw new HandledException("Ocorreu um erro ao inicializar o Ping");
         }
+    }
 
-        private async void Button_AddAddress_Click(object? sender, EventArgs e)
+    private async void Button_AddAddress_Click(object? sender, EventArgs e)
+    {
+        MaskedTextBox_AddAddress.ReadOnly = true;
+        Button_AddAddress.Enabled = false;
+
+        if (MaskedTextBox_AddAddress.Text is not string ip)
+            return;
+
+        try
         {
-            MaskedTextBox_AddAddress.ReadOnly = true;
-            Button_AddAddress.Enabled = false;
-
-            if (MaskedTextBox_AddAddress.Text is not string ip)
-                return;
-
-            try
-            {
-                IPAddress addr = IPAddress.Parse(ip);
-                IPHostEntry entry = await Dns.GetHostEntryAsync(addr);
-
-                MessageBox.Show(entry.HostName);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Erro Capturado");
-            }
-            finally
-            {
-                MaskedTextBox_AddAddress.Text = string.Empty;
-            }
-
+            Address address = await Address.GetAddressFromIp(ip.Trim());
+            Addresses.Add(address);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"{ip}:\n\n{ex.Message}", "Erro Capturado", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        finally
+        {
+            MaskedTextBox_AddAddress.Text = string.Empty;
             MaskedTextBox_AddAddress.ReadOnly = false;
             Button_AddAddress.Enabled = true;
-        }
-
-        private void FormMainScreen_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

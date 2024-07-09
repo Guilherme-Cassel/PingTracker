@@ -1,23 +1,22 @@
 ﻿using PingTracker;
 using System.ComponentModel;
+using System.Reflection;
 
 namespace PingTracker_Model.CustomControls
 {
     public partial class AddressDataGrid : DataGridView
     {
-        BindingList<Address> Addresses = [];
+        public BindingList<Address> Addresses = [];
 
         public AddressDataGrid()
         {
-            
-
             InitializeComponent();
         }
 
-        private void InitializeBinding()
+        private void InitializeBinding(FormMainScreen parent)
         {
             BindingSource bindingSource = new();
-            bindingSource.DataSource = Addresses;
+            parent.AddressesBindingList.DataSource = Addresses;
             DataSource = bindingSource;
         }
     }
