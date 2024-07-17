@@ -1,101 +1,50 @@
 ﻿using System.Net;
-using System.Net.NetworkInformation;
 
 namespace PingTracker;
 
-public class Address(string ip, string dnsName)
+public class Address
 {
-    private CancellationTokenSource cancellationToken = new();
-    public int PingCount { get; set; }
-    public int PingDropCount { get; set; }
-    public string Ip { get; private set; } = ip;
-    public string DnsName { get; private set; } = dnsName;
+    public string Ip { get; set; }
+    public string? DnsName { get; set; }
+    public int PingCount { get; set; } = 1;
+    public string PacketLossPorcentage => GetPacketLoss();
+    public AddressPinger? Pinger { get; private set; }
 
-    public static async Task<Address> GetAddressFromIp(string ip)
+    private string GetPacketLoss()
     {
-        IPAddress addr = IPAddress.Parse(ip);
-        IPHostEntry entry = await Dns.GetHostEntryAsync(addr);
+        if (Pinger is null)
+            return "";
 
-        string dnsName = entry.HostName[..entry.HostName.IndexOf('.')];
+        var value = Pinger.PingDropCount * 100 / PingCount;
 
-        return new(ip, dnsName);
+        return $"{value:N2}%";
     }
 
-    private async Task<bool> Ping()
+    public Address(string ip = "", string dnsName = "")
     {
-        using Ping ping = new();
-        PingReply reply = ping.Send(Ip);
+        Ip = ip;
+        DnsName = dnsName;
+    }
 
-        await Task.Delay(1000);
-
-        switch (reply.Status)
+    public async Task InitializePinger()
+    {
+        await Task.Run(() =>
         {
-            case IPStatus.DestinationHostUnreachable:
-                return false;
-            case IPStatus.DestinationUnreachable:
-                return false;
-            case IPStatus.TimedOut:
-                return false;
-            case IPStatus.TimeExceeded:
-                return false;
-            default: return true;
-        }
+            Pinger = new(this);
+        });
     }
 
-    private async Task PingLoop()
+    public static async Task<string> GetDnsName(string ip)
     {
-        await Task.Run(async () =>
-        {
-            int dropCount;
-            bool result;
+        int timeout = 1000;
 
-            while (true)
-            {
-                dropCount = 0;
+        Task<IPHostEntry> task = Dns.GetHostEntryAsync(ip);
+        Task completedTask = await Task.WhenAny(task, Task.Delay(timeout));
 
-                result = await Ping();
+        if (completedTask != task)
+            throw new HandledException("Host Não Encontrado");
 
-                if (result)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.WriteLine($"Pinged {Ip} Successfully");
-                    continue;
-                }
-
-                DateTime dropTime = DateTime.Now;
-                while (!result)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine($"Pinged {Ip} Unsuccessfully");
-
-                    dropCount++;
-
-                    result = await Ping();
-
-                    if (dropCount == 5)
-                    {
-                        Log($"{dropTime} - Connection Lost: {DnsName}");
-                    }
-
-                    if (result && dropCount >= 5)
-                    {
-                        Log($"{DateTime.Now} - Connection Reestabilished: {DnsName}");
-                    }
-                }
-            }
-        }, cancellationToken.Token);
-    }
-
-    public void StopPing() => cancellationToken.Cancel();
-
-    public async Task StartPing()
-    {
-        cancellationToken = new();
-        await PingLoop();
-    }
-
-    public void Log(string msg)
-    {
-
+        IPHostEntry entry = await task;
+        return entry.HostName[..entry.HostName.IndexOf('.')];
     }
 }

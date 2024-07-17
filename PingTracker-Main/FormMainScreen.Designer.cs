@@ -29,45 +29,30 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            RichTextBox_Log = new RichTextBox();
             Button_AddAddress = new Button();
-            MaskedTextBox_AddAddress = new MaskedTextBox();
             ipDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             dnsNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddressesDataGrid = new DataGridView();
             ipDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             dnsNameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            pingCountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            packetLossPorcentageDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddressBindingSource = new BindingSource(components);
+            RichTextBox_Log = new RichTextBox();
+            button1 = new Button();
+            TextBox_AddAddress = new TextBox();
             ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AddressBindingSource).BeginInit();
             SuspendLayout();
             // 
-            // RichTextBox_Log
-            // 
-            RichTextBox_Log.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            RichTextBox_Log.Location = new Point(278, 108);
-            RichTextBox_Log.Name = "RichTextBox_Log";
-            RichTextBox_Log.Size = new Size(644, 291);
-            RichTextBox_Log.TabIndex = 1;
-            RichTextBox_Log.Text = "";
-            // 
             // Button_AddAddress
             // 
-            Button_AddAddress.Location = new Point(278, 60);
+            Button_AddAddress.Location = new Point(422, 59);
             Button_AddAddress.Name = "Button_AddAddress";
             Button_AddAddress.Size = new Size(100, 40);
             Button_AddAddress.TabIndex = 1;
             Button_AddAddress.Text = "Add Address";
             Button_AddAddress.UseVisualStyleBackColor = true;
-            // 
-            // MaskedTextBox_AddAddress
-            // 
-            MaskedTextBox_AddAddress.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            MaskedTextBox_AddAddress.Location = new Point(278, 20);
-            MaskedTextBox_AddAddress.Mask = "000,000,0,000";
-            MaskedTextBox_AddAddress.Name = "MaskedTextBox_AddAddress";
-            MaskedTextBox_AddAddress.Size = new Size(124, 29);
-            MaskedTextBox_AddAddress.TabIndex = 0;
             // 
             // ipDataGridViewTextBoxColumn
             // 
@@ -93,49 +78,93 @@
             AddressesDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             AddressesDataGrid.BackgroundColor = Color.White;
             AddressesDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AddressesDataGrid.Columns.AddRange(new DataGridViewColumn[] { ipDataGridViewTextBoxColumn1, dnsNameDataGridViewTextBoxColumn1 });
+            AddressesDataGrid.Columns.AddRange(new DataGridViewColumn[] { ipDataGridViewTextBoxColumn1, dnsNameDataGridViewTextBoxColumn1, pingCountDataGridViewTextBoxColumn, packetLossPorcentageDataGridViewTextBoxColumn });
             AddressesDataGrid.DataSource = AddressBindingSource;
             AddressesDataGrid.Location = new Point(12, 20);
+            AddressesDataGrid.MultiSelect = false;
             AddressesDataGrid.Name = "AddressesDataGrid";
             AddressesDataGrid.ReadOnly = true;
             AddressesDataGrid.RowHeadersVisible = false;
             AddressesDataGrid.ScrollBars = ScrollBars.Vertical;
-            AddressesDataGrid.Size = new Size(257, 379);
+            AddressesDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            AddressesDataGrid.Size = new Size(404, 379);
             AddressesDataGrid.TabIndex = 2;
             // 
             // ipDataGridViewTextBoxColumn1
             // 
+            ipDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             ipDataGridViewTextBoxColumn1.DataPropertyName = "Ip";
             ipDataGridViewTextBoxColumn1.HeaderText = "Ip";
-            ipDataGridViewTextBoxColumn1.MaxInputLength = 20;
-            ipDataGridViewTextBoxColumn1.MinimumWidth = 90;
             ipDataGridViewTextBoxColumn1.Name = "ipDataGridViewTextBoxColumn1";
             ipDataGridViewTextBoxColumn1.ReadOnly = true;
-            ipDataGridViewTextBoxColumn1.Width = 90;
             // 
             // dnsNameDataGridViewTextBoxColumn1
             // 
             dnsNameDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             dnsNameDataGridViewTextBoxColumn1.DataPropertyName = "DnsName";
             dnsNameDataGridViewTextBoxColumn1.HeaderText = "DnsName";
-            dnsNameDataGridViewTextBoxColumn1.MaxInputLength = 25;
             dnsNameDataGridViewTextBoxColumn1.Name = "dnsNameDataGridViewTextBoxColumn1";
             dnsNameDataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // pingCountDataGridViewTextBoxColumn
+            // 
+            pingCountDataGridViewTextBoxColumn.DataPropertyName = "PingCount";
+            pingCountDataGridViewTextBoxColumn.HeaderText = "PingCount";
+            pingCountDataGridViewTextBoxColumn.Name = "pingCountDataGridViewTextBoxColumn";
+            pingCountDataGridViewTextBoxColumn.ReadOnly = true;
+            pingCountDataGridViewTextBoxColumn.Width = 89;
+            // 
+            // packetLossPorcentageDataGridViewTextBoxColumn
+            // 
+            packetLossPorcentageDataGridViewTextBoxColumn.DataPropertyName = "PacketLossPorcentage";
+            packetLossPorcentageDataGridViewTextBoxColumn.HeaderText = "PacketLoss";
+            packetLossPorcentageDataGridViewTextBoxColumn.Name = "packetLossPorcentageDataGridViewTextBoxColumn";
+            packetLossPorcentageDataGridViewTextBoxColumn.ReadOnly = true;
+            packetLossPorcentageDataGridViewTextBoxColumn.Width = 90;
             // 
             // AddressBindingSource
             // 
             AddressBindingSource.DataSource = typeof(Address);
+            // 
+            // RichTextBox_Log
+            // 
+            RichTextBox_Log.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            RichTextBox_Log.Location = new Point(422, 108);
+            RichTextBox_Log.Name = "RichTextBox_Log";
+            RichTextBox_Log.Size = new Size(450, 291);
+            RichTextBox_Log.TabIndex = 1;
+            RichTextBox_Log.Text = "";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(713, 38);
+            button1.Name = "button1";
+            button1.Size = new Size(102, 48);
+            button1.TabIndex = 3;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // TextBox_AddAddress
+            // 
+            TextBox_AddAddress.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TextBox_AddAddress.Location = new Point(422, 24);
+            TextBox_AddAddress.Name = "TextBox_AddAddress";
+            TextBox_AddAddress.Size = new Size(111, 29);
+            TextBox_AddAddress.TabIndex = 0;
             // 
             // FormMainScreen
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(934, 411);
+            ClientSize = new Size(884, 411);
+            Controls.Add(TextBox_AddAddress);
+            Controls.Add(button1);
             Controls.Add(AddressesDataGrid);
-            Controls.Add(MaskedTextBox_AddAddress);
             Controls.Add(Button_AddAddress);
             Controls.Add(RichTextBox_Log);
+            MinimumSize = new Size(900, 450);
             Name = "FormMainScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PingTracker";
@@ -146,14 +175,17 @@
         }
 
         #endregion
-        private RichTextBox RichTextBox_Log;
         private Button Button_AddAddress;
-        private MaskedTextBox MaskedTextBox_AddAddress;
         private DataGridViewTextBoxColumn ipDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn;
         private DataGridView AddressesDataGrid;
+        private BindingSource AddressBindingSource;
+        private RichTextBox RichTextBox_Log;
         private DataGridViewTextBoxColumn ipDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn1;
-        private BindingSource AddressBindingSource;
+        private DataGridViewTextBoxColumn pingCountDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn packetLossPorcentageDataGridViewTextBoxColumn;
+        private Button button1;
+        private TextBox TextBox_AddAddress;
     }
 }
