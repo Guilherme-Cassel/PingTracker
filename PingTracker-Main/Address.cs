@@ -1,14 +1,43 @@
-﻿using System.Net;
+﻿using System.ComponentModel;
+using System.Net;
+using System.Runtime.CompilerServices;
 
 namespace PingTracker;
 
-public class Address
+public class Address(string ip = "", string dnsName = "") : INotifyPropertyChanged
 {
-    public string Ip { get; set; }
-    public string? DnsName { get; set; }
-    public int PingCount { get; set; } = 1;
+    public string Ip { get; set; } = ip;
+
+    public string DnsName { get; set; } = dnsName;
+
+    private int _pingCount = 1;
+
+    public int PingCount
+    {
+        get => _pingCount;
+        set
+        {
+            if (_pingCount != value)
+            {
+                _pingCount = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+
+    public double PingDropCount { get; set; } = 0;
+
     public string PacketLossPorcentage => GetPacketLoss();
+
     public AddressPinger? Pinger { get; private set; }
+
+
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 
     private string GetPacketLoss()
     {
