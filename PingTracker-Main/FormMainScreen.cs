@@ -15,17 +15,15 @@ public partial class FormMainScreen : Form
         AddressBindingSource.DataSource = Addresses;
 
         Button_AddAddress.Click += Button_AddAddress_Click;
-        RefreshDataGrid();
+        ButtonStartAll.Click += ButtonStartAll_Click;
+        ButtonStopAll.Click += ButtonStopAll_Click;
+        TextBox_AddAddress.KeyDown += TextBox_AddAddress_KeyDown; ;
     }
 
-    private async void RefreshDataGrid()
+    private void TextBox_AddAddress_KeyDown(object? sender, KeyEventArgs e)
     {
-        while (true)
-        {
-            await Task.Delay(1000);
-            if (Addresses.Count > 0)
-                await Task.Run(AddressesDataGrid.Invalidate);
-        }
+        if (e.KeyCode == Keys.Enter)
+            Button_AddAddress_Click(null, new());
     }
 
     private async void Button_AddAddress_Click(object? sender, EventArgs e)
@@ -41,22 +39,7 @@ public partial class FormMainScreen : Form
             if (Addresses.Any(x => x.Ip == ip))
                 throw new HandledException("Ip Already Added");
 
-            Address address = new(ip)
-            {
-                DnsName = await Address.GetDnsName(ip)
-            };
-
-            await address.InitializePinger();
-
-            Addresses.Insert(0, address);
-
-            address.Pinger!.StartPing();
-
-            MessageBox.Show(
-                "IP was added successfully.\n\nIt's Ping Monitor has been started",
-                "Success",
-                MessageBoxButtons.OK,
-                MessageBoxIcon.Information);
+            await AddNewAddress(ip);
         }
         catch (Exception ex)
         {
@@ -70,11 +53,38 @@ public partial class FormMainScreen : Form
         }
     }
 
-    private async void button1_Click(object sender, EventArgs e)
+    private async Task AddNewAddress(string ip)
+    {
+        Address address = await Address.GetAddress(ip);
+
+        address.PropertyChanged += Address_PropertyChanged;
+
+        await address.InitializePinger();
+
+        Addresses.Insert(0, address);
+    }
+
+    private async void Address_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        await Task.Run(AddressesDataGrid.Invalidate);
+    }
+
+    private void ButtonStartAll_Click(object? sender, EventArgs e)
     {
         foreach (var address in Addresses)
         {
-            await address.Pinger?.StopPing();
+            if (address.Pinger.LoopingTask is not null)
+                continue;
+
+            _ = address.Pinger!.StartPing();
+        }
+    }
+
+    private async void ButtonStopAll_Click(object? sender, EventArgs e)
+    {
+        foreach (var address in Addresses)
+        {
+            await address.Pinger!.StopPing();
         }
     }
 }

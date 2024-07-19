@@ -9,8 +9,9 @@ public class AddressPinger(Address address)
     public Address Address { get; set; } = address;
 
     private CancellationTokenSource cancellationTokenSource = new();
-    public double PingDropCount { get; private set; }
+
     public StringBuilder LogBank { get; private set; } = new();
+
     public Task? LoopingTask { get; set; } = null;
 
     private async Task<bool> Ping()
@@ -44,9 +45,9 @@ public class AddressPinger(Address address)
         while (true)
         {
             if (cancellationTokenSource.IsCancellationRequested)
-                break;
+                throw new TaskCanceledException();
 
-            backupDropCount = PingDropCount;
+            backupDropCount = Address.PingDropCount;
 
             result = await Ping();
 
@@ -57,14 +58,14 @@ public class AddressPinger(Address address)
             double connectionLostPoint = backupDropCount + 5;
             while (!result)
             {
-                PingDropCount++;
+                Address.PingDropCount++;
 
                 result = await Ping();
 
-                if (PingDropCount == connectionLostPoint)
+                if (Address.PingDropCount == connectionLostPoint)
                     Log(dropTime, "Connection Lost");
 
-                if (result && PingDropCount >= connectionLostPoint)
+                if (result && Address.PingDropCount >= connectionLostPoint)
                     Log(DateTime.Now, "Connection Reestabilished");
             }
         }
@@ -81,13 +82,17 @@ public class AddressPinger(Address address)
         {
             if (LoopingTask is null || LoopingTask.Status != TaskStatus.Running)
             {
-                LoopingTask = Task.Run(PingLoop);
+                LoopingTask = Task.Run(PingLoop, cancellationTokenSource.Token);
                 await LoopingTask;
             }
         }
         catch (TaskCanceledException)
         {
             MessageBox.Show($"The ping of {Address.Ip} has stopped");
+        }
+        finally
+        {
+            LoopingTask = null;
         }
     }
 

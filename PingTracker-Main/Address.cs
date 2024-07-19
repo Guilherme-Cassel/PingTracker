@@ -44,23 +44,22 @@ public class Address(string ip = "", string dnsName = "") : INotifyPropertyChang
         if (Pinger is null)
             return "";
 
-        var value = Pinger.PingDropCount * 100 / PingCount;
+        var value = PingDropCount * 100 / PingCount;
 
         return $"{value:N2}%";
     }
 
-    public Address(string ip = "", string dnsName = "")
-    {
-        Ip = ip;
-        DnsName = dnsName;
-    }
-
+    /// <summary>
+    /// Assincronously creates Pinger and starts the PingLoop
+    /// </summary>
     public async Task InitializePinger()
     {
         await Task.Run(() =>
         {
             Pinger = new(this);
         });
+
+        _ = Pinger!.StartPing();
     }
 
     public static async Task<Address> GetAddress(string ip)
