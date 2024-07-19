@@ -39,8 +39,9 @@
             packetLossPorcentageDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddressBindingSource = new BindingSource(components);
             RichTextBox_Log = new RichTextBox();
-            button1 = new Button();
+            ButtonStopAll = new Button();
             TextBox_AddAddress = new TextBox();
+            ButtonStartAll = new Button();
             ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AddressBindingSource).BeginInit();
             SuspendLayout();
@@ -135,15 +136,16 @@
             RichTextBox_Log.TabIndex = 1;
             RichTextBox_Log.Text = "";
             // 
-            // button1
+            // ButtonStopAll
             // 
-            button1.Location = new Point(713, 38);
-            button1.Name = "button1";
-            button1.Size = new Size(102, 48);
-            button1.TabIndex = 3;
-            button1.Text = "button1";
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
+            ButtonStopAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ButtonStopAll.Location = new Point(792, 12);
+            ButtonStopAll.Name = "ButtonStopAll";
+            ButtonStopAll.Size = new Size(80, 40);
+            ButtonStopAll.TabIndex = 3;
+            ButtonStopAll.Text = "Stop All";
+            ButtonStopAll.UseVisualStyleBackColor = true;
+            ButtonStopAll.Click += ButtonStopAll_Click;
             // 
             // TextBox_AddAddress
             // 
@@ -153,14 +155,25 @@
             TextBox_AddAddress.Size = new Size(111, 29);
             TextBox_AddAddress.TabIndex = 0;
             // 
+            // ButtonStartAll
+            // 
+            ButtonStartAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ButtonStartAll.Location = new Point(706, 12);
+            ButtonStartAll.Name = "ButtonStartAll";
+            ButtonStartAll.Size = new Size(80, 40);
+            ButtonStartAll.TabIndex = 4;
+            ButtonStartAll.Text = "Start All";
+            ButtonStartAll.UseVisualStyleBackColor = true;
+            // 
             // FormMainScreen
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(884, 411);
+            Controls.Add(ButtonStartAll);
             Controls.Add(TextBox_AddAddress);
-            Controls.Add(button1);
+            Controls.Add(ButtonStopAll);
             Controls.Add(AddressesDataGrid);
             Controls.Add(Button_AddAddress);
             Controls.Add(RichTextBox_Log);
@@ -185,7 +198,8 @@
         private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn pingCountDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn packetLossPorcentageDataGridViewTextBoxColumn;
-        private Button button1;
+        private Button ButtonStopAll;
         private TextBox TextBox_AddAddress;
+        private Button ButtonStartAll;
     }
 }
