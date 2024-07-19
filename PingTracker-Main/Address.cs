@@ -63,7 +63,7 @@ public class Address(string ip = "", string dnsName = "") : INotifyPropertyChang
         });
     }
 
-    public static async Task<string> GetDnsName(string ip)
+    public static async Task<Address> GetAddress(string ip)
     {
         int timeout = 1000;
 
@@ -74,6 +74,15 @@ public class Address(string ip = "", string dnsName = "") : INotifyPropertyChang
             throw new HandledException("Host Não Encontrado");
 
         IPHostEntry entry = await task;
-        return entry.HostName[..entry.HostName.IndexOf('.')];
+
+        string mainIp = entry.AddressList[0].ToString();
+        string dnsName = entry.HostName;
+
+        if (dnsName.Contains('.'))
+        {
+            dnsName = entry.HostName[..entry.HostName.IndexOf('.')];
+        }
+
+        return new(mainIp, dnsName);
     }
 }
