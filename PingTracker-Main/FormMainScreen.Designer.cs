@@ -38,19 +38,24 @@
             pingCountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             packetLossPorcentageDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddressBindingSource = new BindingSource(components);
-            RichTextBox_Log = new RichTextBox();
-            ButtonStopAll = new Button();
             TextBox_AddAddress = new TextBox();
-            ButtonStartAll = new Button();
+            MenuStrip = new MenuStrip();
+            actionsToolStripMenuItem = new ToolStripMenuItem();
+            pingingToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripStartAll = new ToolStripMenuItem();
+            ToolStripStopAll = new ToolStripMenuItem();
+            addressListToolStripMenuItem = new ToolStripMenuItem();
+            ToolStripClearList = new ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AddressBindingSource).BeginInit();
+            MenuStrip.SuspendLayout();
             SuspendLayout();
             // 
             // Button_AddAddress
             // 
-            Button_AddAddress.Location = new Point(422, 59);
+            Button_AddAddress.Location = new Point(129, 28);
             Button_AddAddress.Name = "Button_AddAddress";
-            Button_AddAddress.Size = new Size(100, 40);
+            Button_AddAddress.Size = new Size(111, 29);
             Button_AddAddress.TabIndex = 1;
             Button_AddAddress.Text = "Add Address";
             Button_AddAddress.UseVisualStyleBackColor = true;
@@ -74,21 +79,21 @@
             AddressesDataGrid.AllowUserToAddRows = false;
             AddressesDataGrid.AllowUserToDeleteRows = false;
             AddressesDataGrid.AllowUserToResizeRows = false;
-            AddressesDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            AddressesDataGrid.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             AddressesDataGrid.AutoGenerateColumns = false;
             AddressesDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             AddressesDataGrid.BackgroundColor = Color.White;
             AddressesDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             AddressesDataGrid.Columns.AddRange(new DataGridViewColumn[] { ipDataGridViewTextBoxColumn1, dnsNameDataGridViewTextBoxColumn1, pingCountDataGridViewTextBoxColumn, packetLossPorcentageDataGridViewTextBoxColumn });
             AddressesDataGrid.DataSource = AddressBindingSource;
-            AddressesDataGrid.Location = new Point(12, 20);
+            AddressesDataGrid.Location = new Point(12, 63);
             AddressesDataGrid.MultiSelect = false;
             AddressesDataGrid.Name = "AddressesDataGrid";
             AddressesDataGrid.ReadOnly = true;
             AddressesDataGrid.RowHeadersVisible = false;
             AddressesDataGrid.ScrollBars = ScrollBars.Vertical;
             AddressesDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            AddressesDataGrid.Size = new Size(404, 379);
+            AddressesDataGrid.Size = new Size(610, 336);
             AddressesDataGrid.TabIndex = 2;
             // 
             // ipDataGridViewTextBoxColumn1
@@ -109,80 +114,99 @@
             // 
             // pingCountDataGridViewTextBoxColumn
             // 
+            pingCountDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             pingCountDataGridViewTextBoxColumn.DataPropertyName = "PingCount";
             pingCountDataGridViewTextBoxColumn.HeaderText = "PingCount";
             pingCountDataGridViewTextBoxColumn.Name = "pingCountDataGridViewTextBoxColumn";
             pingCountDataGridViewTextBoxColumn.ReadOnly = true;
-            pingCountDataGridViewTextBoxColumn.Width = 89;
             // 
             // packetLossPorcentageDataGridViewTextBoxColumn
             // 
+            packetLossPorcentageDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             packetLossPorcentageDataGridViewTextBoxColumn.DataPropertyName = "PacketLossPorcentage";
             packetLossPorcentageDataGridViewTextBoxColumn.HeaderText = "PacketLoss";
             packetLossPorcentageDataGridViewTextBoxColumn.Name = "packetLossPorcentageDataGridViewTextBoxColumn";
             packetLossPorcentageDataGridViewTextBoxColumn.ReadOnly = true;
-            packetLossPorcentageDataGridViewTextBoxColumn.Width = 90;
             // 
             // AddressBindingSource
             // 
             AddressBindingSource.DataSource = typeof(Address);
             // 
-            // RichTextBox_Log
-            // 
-            RichTextBox_Log.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            RichTextBox_Log.Location = new Point(422, 108);
-            RichTextBox_Log.Name = "RichTextBox_Log";
-            RichTextBox_Log.Size = new Size(450, 291);
-            RichTextBox_Log.TabIndex = 1;
-            RichTextBox_Log.Text = "";
-            // 
-            // ButtonStopAll
-            // 
-            ButtonStopAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ButtonStopAll.Location = new Point(792, 12);
-            ButtonStopAll.Name = "ButtonStopAll";
-            ButtonStopAll.Size = new Size(80, 40);
-            ButtonStopAll.TabIndex = 3;
-            ButtonStopAll.Text = "Stop All";
-            ButtonStopAll.UseVisualStyleBackColor = true;
-            ButtonStopAll.Click += ButtonStopAll_Click;
-            // 
             // TextBox_AddAddress
             // 
             TextBox_AddAddress.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            TextBox_AddAddress.Location = new Point(422, 24);
+            TextBox_AddAddress.Location = new Point(12, 27);
             TextBox_AddAddress.Name = "TextBox_AddAddress";
             TextBox_AddAddress.Size = new Size(111, 29);
             TextBox_AddAddress.TabIndex = 0;
             // 
-            // ButtonStartAll
+            // MenuStrip
             // 
-            ButtonStartAll.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ButtonStartAll.Location = new Point(706, 12);
-            ButtonStartAll.Name = "ButtonStartAll";
-            ButtonStartAll.Size = new Size(80, 40);
-            ButtonStartAll.TabIndex = 4;
-            ButtonStartAll.Text = "Start All";
-            ButtonStartAll.UseVisualStyleBackColor = true;
+            MenuStrip.Items.AddRange(new ToolStripItem[] { actionsToolStripMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Size = new Size(634, 24);
+            MenuStrip.TabIndex = 5;
+            MenuStrip.Text = "menuStrip1";
+            // 
+            // actionsToolStripMenuItem
+            // 
+            actionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { pingingToolStripMenuItem, addressListToolStripMenuItem });
+            actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
+            actionsToolStripMenuItem.Size = new Size(59, 20);
+            actionsToolStripMenuItem.Text = "Actions";
+            // 
+            // pingingToolStripMenuItem
+            // 
+            pingingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ToolStripStartAll, ToolStripStopAll });
+            pingingToolStripMenuItem.Name = "pingingToolStripMenuItem";
+            pingingToolStripMenuItem.Size = new Size(180, 22);
+            pingingToolStripMenuItem.Text = "Pinging";
+            // 
+            // ToolStripStartAll
+            // 
+            ToolStripStartAll.Name = "ToolStripStartAll";
+            ToolStripStartAll.Size = new Size(115, 22);
+            ToolStripStartAll.Text = "Start All";
+            // 
+            // ToolStripStopAll
+            // 
+            ToolStripStopAll.Name = "ToolStripStopAll";
+            ToolStripStopAll.Size = new Size(115, 22);
+            ToolStripStopAll.Text = "Stop All";
+            // 
+            // addressListToolStripMenuItem
+            // 
+            addressListToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ToolStripClearList });
+            addressListToolStripMenuItem.Name = "addressListToolStripMenuItem";
+            addressListToolStripMenuItem.Size = new Size(180, 22);
+            addressListToolStripMenuItem.Text = "Address List";
+            // 
+            // ToolStripClearList
+            // 
+            ToolStripClearList.Name = "ToolStripClearList";
+            ToolStripClearList.Size = new Size(180, 22);
+            ToolStripClearList.Text = "Clear List";
             // 
             // FormMainScreen
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
-            BackColor = SystemColors.GradientActiveCaption;
-            ClientSize = new Size(884, 411);
-            Controls.Add(ButtonStartAll);
+            BackColor = SystemColors.Control;
+            ClientSize = new Size(634, 411);
             Controls.Add(TextBox_AddAddress);
-            Controls.Add(ButtonStopAll);
             Controls.Add(AddressesDataGrid);
             Controls.Add(Button_AddAddress);
-            Controls.Add(RichTextBox_Log);
-            MinimumSize = new Size(900, 450);
+            Controls.Add(MenuStrip);
+            MainMenuStrip = MenuStrip;
+            MinimumSize = new Size(650, 450);
             Name = "FormMainScreen";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PingTracker";
             ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).EndInit();
             ((System.ComponentModel.ISupportInitialize)AddressBindingSource).EndInit();
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -193,13 +217,17 @@
         private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn;
         private DataGridView AddressesDataGrid;
         private BindingSource AddressBindingSource;
-        private RichTextBox RichTextBox_Log;
+        private TextBox TextBox_AddAddress;
+        private MenuStrip MenuStrip;
+        private ToolStripMenuItem actionsToolStripMenuItem;
+        private ToolStripMenuItem pingingToolStripMenuItem;
+        private ToolStripMenuItem ToolStripStartAll;
+        private ToolStripMenuItem ToolStripStopAll;
         private DataGridViewTextBoxColumn ipDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn dnsNameDataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn pingCountDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn packetLossPorcentageDataGridViewTextBoxColumn;
-        private Button ButtonStopAll;
-        private TextBox TextBox_AddAddress;
-        private Button ButtonStartAll;
+        private ToolStripMenuItem addressListToolStripMenuItem;
+        private ToolStripMenuItem ToolStripClearList;
     }
 }

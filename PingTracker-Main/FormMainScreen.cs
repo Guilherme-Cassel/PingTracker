@@ -14,10 +14,19 @@ public partial class FormMainScreen : Form
 
         AddressBindingSource.DataSource = Addresses;
 
+        TextBox_AddAddress.KeyDown += TextBox_AddAddress_KeyDown;
         Button_AddAddress.Click += Button_AddAddress_Click;
-        ButtonStartAll.Click += ButtonStartAll_Click;
-        ButtonStopAll.Click += ButtonStopAll_Click;
-        TextBox_AddAddress.KeyDown += TextBox_AddAddress_KeyDown; ;
+        ToolStripStartAll.Click += ToolStripStartAll_Click;
+        ToolStripStopAll.Click += ToolStripStopAll_Click;
+        ToolStripClearList.Click += ToolStripClearList_Click;
+        AddressesDataGrid.DoubleClick += AddressesDataGrid_DoubleClick;
+    }
+
+    private void AddressesDataGrid_DoubleClick(object? sender, EventArgs e)
+    {
+        if (sender is not DataRow row)
+
+        AddressZoom zoomForm = new AddressZoom(row.)
     }
 
     private void TextBox_AddAddress_KeyDown(object? sender, KeyEventArgs e)
@@ -69,7 +78,7 @@ public partial class FormMainScreen : Form
         await Task.Run(AddressesDataGrid.Invalidate);
     }
 
-    private void ButtonStartAll_Click(object? sender, EventArgs e)
+    private void ToolStripStartAll_Click(object? sender, EventArgs e)
     {
         foreach (var address in Addresses)
         {
@@ -80,11 +89,18 @@ public partial class FormMainScreen : Form
         }
     }
 
-    private async void ButtonStopAll_Click(object? sender, EventArgs e)
+    private async void ToolStripStopAll_Click(object? sender, EventArgs e)
     {
         foreach (var address in Addresses)
         {
             await address.Pinger!.StopPing();
         }
+    }
+
+    private void ToolStripClearList_Click(object? sender, EventArgs e)
+    {
+        ToolStripStopAll_Click(null, new());
+
+        Addresses.Clear();
     }
 }
