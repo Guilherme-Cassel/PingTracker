@@ -53,7 +53,7 @@
             // 
             // Button_AddAddress
             // 
-            Button_AddAddress.Location = new Point(129, 28);
+            Button_AddAddress.Location = new Point(129, 27);
             Button_AddAddress.Name = "Button_AddAddress";
             Button_AddAddress.Size = new Size(111, 29);
             Button_AddAddress.TabIndex = 1;
@@ -160,7 +160,7 @@
             // 
             pingingToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ToolStripStartAll, ToolStripStopAll });
             pingingToolStripMenuItem.Name = "pingingToolStripMenuItem";
-            pingingToolStripMenuItem.Size = new Size(180, 22);
+            pingingToolStripMenuItem.Size = new Size(137, 22);
             pingingToolStripMenuItem.Text = "Pinging";
             // 
             // ToolStripStartAll
@@ -179,13 +179,13 @@
             // 
             addressListToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { ToolStripClearList });
             addressListToolStripMenuItem.Name = "addressListToolStripMenuItem";
-            addressListToolStripMenuItem.Size = new Size(180, 22);
+            addressListToolStripMenuItem.Size = new Size(137, 22);
             addressListToolStripMenuItem.Text = "Address List";
             // 
             // ToolStripClearList
             // 
             ToolStripClearList.Name = "ToolStripClearList";
-            ToolStripClearList.Size = new Size(180, 22);
+            ToolStripClearList.Size = new Size(122, 22);
             ToolStripClearList.Text = "Clear List";
             // 
             // FormMainScreen

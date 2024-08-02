@@ -24,9 +24,20 @@ public partial class FormMainScreen : Form
 
     private void AddressesDataGrid_DoubleClick(object? sender, EventArgs e)
     {
-        if (sender is not DataRow row)
+        if (sender is not DataGridView dataGrid)
+            return;
 
-        AddressZoom zoomForm = new AddressZoom(row.)
+        var selectedRow = dataGrid.SelectedRows[0];
+        var rowObject = selectedRow.DataBoundItem;
+
+        if (rowObject is not Address address)
+        {
+            MessageBox.Show("Could not retrieve the Address from the selection", "Error");
+            return;
+        }
+
+        AddressZoom zoomForm = new(ref address);
+        zoomForm.ShowDialog();
     }
 
     private void TextBox_AddAddress_KeyDown(object? sender, KeyEventArgs e)
