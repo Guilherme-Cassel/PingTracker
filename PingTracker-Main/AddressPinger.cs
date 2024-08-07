@@ -1,103 +1,103 @@
-﻿using System.Net.NetworkInformation;
-using System.Net;
-using System.Text;
+﻿//using System.Net.NetworkInformation;
+//using System.Net;
+//using System.Text;
 
-namespace PingTracker;
+//namespace PingTracker;
 
-public class AddressPinger(Address address)
-{
-    public Address Address { get; set; } = address;
+//public class AddressPinger(Address address)
+//{
+//    public Address Address { get; set; } = address;
 
-    private CancellationTokenSource cancellationTokenSource = new();
+//    private CancellationTokenSource cancellationTokenSource = new();
 
-    public StringBuilder LogBank { get; private set; } = new();
+//    public StringBuilder LogBank { get; private set; } = new();
 
-    public Task? LoopingTask { get; set; } = null;
+//    public Task? LoopingTask { get; set; } = null;
 
-    private async Task<bool> Ping()
-    {
-        List<IPStatus> UnsuccessfullStatuses = new()
-        {
-            IPStatus.DestinationHostUnreachable,
-            IPStatus.DestinationUnreachable,
-            IPStatus.TimedOut,
-            IPStatus.TimeExceeded
-        };
+//    private async Task<bool> Ping()
+//    {
+//        List<IPStatus> UnsuccessfullStatuses = new()
+//        {
+//            IPStatus.DestinationHostUnreachable,
+//            IPStatus.DestinationUnreachable,
+//            IPStatus.TimedOut,
+//            IPStatus.TimeExceeded
+//        };
 
-        using Ping ping = new();
-        PingReply reply = await ping.SendPingAsync(Address.Ip);
+//        using Ping ping = new();
+//        PingReply reply = await ping.SendPingAsync(Address.Ip);
 
-        Address.PingCount++;
+//        Address.PingCount++;
 
-        await Task.Delay(1000);
+//        await Task.Delay(1000);
 
-        if (UnsuccessfullStatuses.Any(x => x == reply.Status))
-            return false;
+//        if (UnsuccessfullStatuses.Any(x => x == reply.Status))
+//            return false;
 
-        return true;
-    }
+//        return true;
+//    }
 
-    private async Task PingLoop()
-    {
-        double backupDropCount;
-        bool result;
+//    private async Task PingLoop()
+//    {
+//        double backupDropCount;
+//        bool result;
 
-        while (true)
-        {
-            if (cancellationTokenSource.IsCancellationRequested)
-                throw new TaskCanceledException();
+//        while (true)
+//        {
+//            if (cancellationTokenSource.IsCancellationRequested)
+//                throw new TaskCanceledException();
 
-            backupDropCount = Address.PingDropCount;
+//            backupDropCount = Address.PingDropCount;
 
-            result = await Ping();
+//            result = await Ping();
 
-            if (result)
-                continue;
+//            if (result)
+//                continue;
 
-            DateTime dropTime = DateTime.Now;
-            double connectionLostPoint = backupDropCount + 5;
-            while (!result)
-            {
-                Address.PingDropCount++;
+//            DateTime dropTime = DateTime.Now;
+//            double connectionLostPoint = backupDropCount + 5;
+//            while (!result)
+//            {
+//                Address.PingDropCount++;
 
-                result = await Ping();
+//                result = await Ping();
 
-                if (Address.PingDropCount == connectionLostPoint)
-                    Log(dropTime, "Connection Lost");
+//                if (Address.PingDropCount == connectionLostPoint)
+//                    Log(dropTime, "Connection Lost");
 
-                if (result && Address.PingDropCount >= connectionLostPoint)
-                    Log(DateTime.Now, "Connection Reestabilished");
-            }
-        }
-    }
+//                if (result && Address.PingDropCount >= connectionLostPoint)
+//                    Log(DateTime.Now, "Connection Reestabilished");
+//            }
+//        }
+//    }
 
-    public async Task StopPing() => await cancellationTokenSource.CancelAsync();
+//    public async Task StopPing() => await cancellationTokenSource.CancelAsync();
 
-    public async Task StartPing()
-    {
-        if (cancellationTokenSource.IsCancellationRequested)
-            cancellationTokenSource = new();
+//    public async Task StartPing()
+//    {
+//        if (cancellationTokenSource.IsCancellationRequested)
+//            cancellationTokenSource = new();
 
-        try
-        {
-            if (LoopingTask is null || LoopingTask.Status != TaskStatus.Running)
-            {
-                LoopingTask = Task.Run(PingLoop, cancellationTokenSource.Token);
-                await LoopingTask;
-            }
-        }
-        catch (TaskCanceledException)
-        {
-            MessageBox.Show($"The ping of {Address.Ip} has stopped");
-        }
-        finally
-        {
-            LoopingTask = null;
-        }
-    }
+//        try
+//        {
+//            if (LoopingTask is null || LoopingTask.Status != TaskStatus.Running)
+//            {
+//                LoopingTask = Task.Run(PingLoop, cancellationTokenSource.Token);
+//                await LoopingTask;
+//            }
+//        }
+//        catch (TaskCanceledException)
+//        {
+//            MessageBox.Show($"The ping of {Address.Ip} has stopped");
+//        }
+//        finally
+//        {
+//            LoopingTask = null;
+//        }
+//    }
 
-    private void Log(DateTime time, string msg)
-    {
-        LogBank.AppendLine($"({time}) {Address.Ip} | {Address.DnsName} - {msg}");
-    }
-}
+//    private void Log(DateTime time, string msg)
+//    {
+//        LogBank.AppendLine($"({time}) {Address.Ip} | {Address.DnsName} - {msg}");
+//    }
+//}

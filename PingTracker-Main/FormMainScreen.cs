@@ -1,25 +1,39 @@
 using System.ComponentModel;
 using System.Data;
-using System.Linq;
+using System.Net;
 
 namespace PingTracker;
 
 public partial class FormMainScreen : Form
 {
-    public static BindingList<Address> Addresses = [];
+    public static PingManager PingManager = null!;
 
     public FormMainScreen()
     {
         InitializeComponent();
 
-        AddressBindingSource.DataSource = Addresses;
+        AddressBindingSource.DataSource = PingManager.addresses;
+        PingManager.OnPingCompleted += PingManager_OnPingCompleted;
 
         TextBox_AddAddress.KeyDown += TextBox_AddAddress_KeyDown;
         Button_AddAddress.Click += Button_AddAddress_Click;
-        ToolStripStartAll.Click += ToolStripStartAll_Click;
+        ToolStripStartAll.Click += ToolStripStartAll_Click; ;
         ToolStripStopAll.Click += ToolStripStopAll_Click;
         ToolStripClearList.Click += ToolStripClearList_Click;
         AddressesDataGrid.DoubleClick += AddressesDataGrid_DoubleClick;
+    }
+
+    private void ToolStripStopAll_Click(object? sender, EventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void ToolStripStartAll_Click(object? sender, EventArgs e)
+    {
+        foreach (var address in PingManager.addresses)
+        {
+            address.IsActive = false;
+        }
     }
 
     private void AddressesDataGrid_DoubleClick(object? sender, EventArgs e)
@@ -56,10 +70,7 @@ public partial class FormMainScreen : Form
 
         try
         {
-            if (Addresses.Any(x => x.Ip == ip))
-                throw new HandledException("Ip Already Added");
-
-            await AddNewAddress(ip);
+            PingManager.AddAddress(ip);
         }
         catch (Exception ex)
         {
@@ -73,45 +84,13 @@ public partial class FormMainScreen : Form
         }
     }
 
-    private async Task AddNewAddress(string ip)
-    {
-        Address address = await Address.GetAddress(ip);
-
-        address.PropertyChanged += Address_PropertyChanged;
-
-        await address.InitializePinger();
-
-        Addresses.Insert(0, address);
-    }
-
-    private async void Address_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    private async void PingManager_OnPingCompleted(Address address, bool e)
     {
         await Task.Run(AddressesDataGrid.Invalidate);
     }
 
-    private void ToolStripStartAll_Click(object? sender, EventArgs e)
-    {
-        foreach (var address in Addresses)
-        {
-            if (address.Pinger.LoopingTask is not null)
-                continue;
-
-            _ = address.Pinger!.StartPing();
-        }
-    }
-
-    private async void ToolStripStopAll_Click(object? sender, EventArgs e)
-    {
-        foreach (var address in Addresses)
-        {
-            await address.Pinger!.StopPing();
-        }
-    }
-
     private void ToolStripClearList_Click(object? sender, EventArgs e)
     {
-        ToolStripStopAll_Click(null, new());
-
-        Addresses.Clear();
+        PingManager.addresses.Clear();
     }
 }

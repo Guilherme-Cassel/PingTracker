@@ -1,87 +1,64 @@
 ﻿using System.ComponentModel;
 using System.Net;
-using System.Runtime.CompilerServices;
+using System.Net.NetworkInformation;
+using System.Text;
 
-namespace PingTracker;
-
-public class Address(string ip = "", string dnsName = "") : INotifyPropertyChanged
+public class Address : IPAddress, INotifyPropertyChanged
 {
-    public string Ip { get; set; } = ip;
-
-    public string DnsName { get; set; } = dnsName;
-
-    private int _pingCount = 1;
-
-    public int PingCount
+    private bool _isActive = true;
+    public bool IsActive
     {
-        get => _pingCount;
+        get { return _isActive; }
         set
         {
-            if (_pingCount != value)
+            if (_isActive != value)
             {
-                _pingCount = value;
+                _isActive = value;
                 OnPropertyChanged();
             }
         }
     }
-
-    public double PingDropCount { get; set; } = 0;
-
-    public string PacketLossPorcentage => GetPacketLoss();
-
-    public AddressPinger? Pinger { get; private set; }
-
-
+    public int TotalPingsSent { get; private set; }
+    public int TotalPingsReceived { get; private set; }
+    public StringBuilder Log { get; private set; } = new();
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
+    public Address(byte[] address) : base(address) { }
+    public Address(long address) : base(address) { }
+
+    protected virtual void OnPropertyChanged(string propertyName = null)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    private string GetPacketLoss()
+    public async Task<bool> PingAsync()
     {
-        if (Pinger is null)
-            return "";
+        using Ping ping = new();
 
-        var value = PingDropCount * 100 / PingCount;
-
-        return $"{value:N2}%";
-    }
-
-    /// <summary>
-    /// Assincronously creates Pinger and starts the PingLoop
-    /// </summary>
-    public async Task InitializePinger()
-    {
-        await Task.Run(() =>
+        try
         {
-            Pinger = new(this);
-        });
-
-        _ = Pinger!.StartPing();
-    }
-
-    public static async Task<Address> GetAddress(string ip)
-    {
-        int timeout = 1000;
-
-        Task<IPHostEntry> task = Dns.GetHostEntryAsync(ip);
-        Task completedTask = await Task.WhenAny(task, Task.Delay(timeout));
-
-        if (completedTask != task)
-            throw new HandledException("Host Não Encontrado");
-
-        IPHostEntry entry = await task;
-
-        string mainIp = entry.AddressList[0].ToString();
-        string dnsName = entry.HostName;
-
-        if (dnsName.Contains('.'))
-        {
-            dnsName = entry.HostName[..entry.HostName.IndexOf('.')];
+            var reply = await ping.SendPingAsync(this.ToString(), 1000);
+            TotalPingsSent++;
+            if (reply.Status == IPStatus.Success)
+            {
+                TotalPingsReceived++;
+                return true;
+            }
+            return false;
         }
+        catch
+        {
+            TotalPingsSent++;
+            return false;
+        }
+    }
 
-        return new(mainIp, dnsName);
+    public double CalculatePacketLoss()
+    {
+        if (TotalPingsSent == 0)
+            return 0.0;
+
+        int lostPackets = TotalPingsSent - TotalPingsReceived;
+        return (double)lostPackets / TotalPingsSent * 100;
     }
 }
