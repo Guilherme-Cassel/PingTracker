@@ -1,12 +1,10 @@
-using System.ComponentModel;
-using System.Data;
-using System.Net;
+using PingTracker.Model;
 
 namespace PingTracker;
 
 public partial class FormMainScreen : Form
 {
-    public static PingManager PingManager = null!;
+    public static PingManager PingManager = new();
 
     public FormMainScreen()
     {
@@ -23,17 +21,19 @@ public partial class FormMainScreen : Form
         AddressesDataGrid.DoubleClick += AddressesDataGrid_DoubleClick;
     }
 
+    private async void PingManager_OnPingCompleted(Address address, bool e)
+    {
+        await Task.Run(AddressesDataGrid.Invalidate);
+    }
+
     private void ToolStripStopAll_Click(object? sender, EventArgs e)
     {
-        throw new NotImplementedException();
+        PingManager.StopPinging();
     }
 
     private void ToolStripStartAll_Click(object? sender, EventArgs e)
     {
-        foreach (var address in PingManager.addresses)
-        {
-            address.IsActive = false;
-        }
+        PingManager.StartPinging();
     }
 
     private void AddressesDataGrid_DoubleClick(object? sender, EventArgs e)
@@ -60,8 +60,11 @@ public partial class FormMainScreen : Form
             Button_AddAddress_Click(null, new());
     }
 
-    private async void Button_AddAddress_Click(object? sender, EventArgs e)
+    private void Button_AddAddress_Click(object? sender, EventArgs e)
     {
+        if (string.IsNullOrEmpty(TextBox_AddAddress.Text))
+            return;
+
         TextBox_AddAddress.ReadOnly = true;
         Button_AddAddress.Enabled = false;
 
@@ -82,11 +85,6 @@ public partial class FormMainScreen : Form
             TextBox_AddAddress.ReadOnly = false;
             Button_AddAddress.Enabled = true;
         }
-    }
-
-    private async void PingManager_OnPingCompleted(Address address, bool e)
-    {
-        await Task.Run(AddressesDataGrid.Invalidate);
     }
 
     private void ToolStripClearList_Click(object? sender, EventArgs e)

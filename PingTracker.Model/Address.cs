@@ -1,34 +1,34 @@
-﻿using System.ComponentModel;
-using System.Net;
+﻿using System.Net;
 using System.Net.NetworkInformation;
 using System.Text;
 
-public class Address : IPAddress, INotifyPropertyChanged
+namespace PingTracker.Model;
+
+public class Address : IPAddress
 {
-    private bool _isActive = true;
-    public bool IsActive
-    {
-        get { return _isActive; }
-        set
-        {
-            if (_isActive != value)
-            {
-                _isActive = value;
-                OnPropertyChanged();
-            }
-        }
-    }
+    public string Ip { get; private set; } = null!;
+    public string DnsName { get; set; } = string.Empty;
+    public bool IsActive { get; set; } = true;
     public int TotalPingsSent { get; private set; }
     public int TotalPingsReceived { get; private set; }
     public StringBuilder Log { get; private set; } = new();
-    public event PropertyChangedEventHandler? PropertyChanged;
 
-    public Address(byte[] address) : base(address) { }
-    public Address(long address) : base(address) { }
-
-    protected virtual void OnPropertyChanged(string propertyName = null)
+    public Address(byte[] address) : base(address)
     {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        Ip = this.ToString();
+        FillDnsName();
+    }
+
+    public async void FillDnsName()
+    {
+        try
+        {
+            DnsName = await AddressManager.GetDNSName(Ip);
+        }
+        catch
+        {
+            return;
+        }
     }
 
     public async Task<bool> PingAsync()

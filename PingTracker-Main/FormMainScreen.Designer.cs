@@ -1,4 +1,6 @@
-﻿namespace PingTracker
+﻿using PingTracker.Model;
+
+namespace PingTracker
 {
     partial class FormMainScreen
     {
@@ -33,10 +35,6 @@
             ipDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             dnsNameDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddressesDataGrid = new DataGridView();
-            ipDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dnsNameDataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            pingCountDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
-            packetLossPorcentageDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             AddressBindingSource = new BindingSource(components);
             TextBox_AddAddress = new TextBox();
             MenuStrip = new MenuStrip();
@@ -46,6 +44,11 @@
             ToolStripStopAll = new ToolStripMenuItem();
             addressListToolStripMenuItem = new ToolStripMenuItem();
             ToolStripClearList = new ToolStripMenuItem();
+            isActiveDataGridViewCheckBoxColumn = new DataGridViewCheckBoxColumn();
+            DnsName = new DataGridViewTextBoxColumn();
+            Ip = new DataGridViewTextBoxColumn();
+            totalPingsSentDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
+            totalPingsReceivedDataGridViewTextBoxColumn = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)AddressesDataGrid).BeginInit();
             ((System.ComponentModel.ISupportInitialize)AddressBindingSource).BeginInit();
             MenuStrip.SuspendLayout();
@@ -84,7 +87,7 @@
             AddressesDataGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             AddressesDataGrid.BackgroundColor = Color.White;
             AddressesDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            AddressesDataGrid.Columns.AddRange(new DataGridViewColumn[] { ipDataGridViewTextBoxColumn1, dnsNameDataGridViewTextBoxColumn1, pingCountDataGridViewTextBoxColumn, packetLossPorcentageDataGridViewTextBoxColumn });
+            AddressesDataGrid.Columns.AddRange(new DataGridViewColumn[] { isActiveDataGridViewCheckBoxColumn, DnsName, Ip, totalPingsSentDataGridViewTextBoxColumn, totalPingsReceivedDataGridViewTextBoxColumn });
             AddressesDataGrid.DataSource = AddressBindingSource;
             AddressesDataGrid.Location = new Point(12, 63);
             AddressesDataGrid.MultiSelect = false;
@@ -95,38 +98,6 @@
             AddressesDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             AddressesDataGrid.Size = new Size(610, 336);
             AddressesDataGrid.TabIndex = 2;
-            // 
-            // ipDataGridViewTextBoxColumn1
-            // 
-            ipDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            ipDataGridViewTextBoxColumn1.DataPropertyName = "Ip";
-            ipDataGridViewTextBoxColumn1.HeaderText = "Ip";
-            ipDataGridViewTextBoxColumn1.Name = "ipDataGridViewTextBoxColumn1";
-            ipDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dnsNameDataGridViewTextBoxColumn1
-            // 
-            dnsNameDataGridViewTextBoxColumn1.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            dnsNameDataGridViewTextBoxColumn1.DataPropertyName = "DnsName";
-            dnsNameDataGridViewTextBoxColumn1.HeaderText = "DnsName";
-            dnsNameDataGridViewTextBoxColumn1.Name = "dnsNameDataGridViewTextBoxColumn1";
-            dnsNameDataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // pingCountDataGridViewTextBoxColumn
-            // 
-            pingCountDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            pingCountDataGridViewTextBoxColumn.DataPropertyName = "PingCount";
-            pingCountDataGridViewTextBoxColumn.HeaderText = "PingCount";
-            pingCountDataGridViewTextBoxColumn.Name = "pingCountDataGridViewTextBoxColumn";
-            pingCountDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // packetLossPorcentageDataGridViewTextBoxColumn
-            // 
-            packetLossPorcentageDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            packetLossPorcentageDataGridViewTextBoxColumn.DataPropertyName = "PacketLossPorcentage";
-            packetLossPorcentageDataGridViewTextBoxColumn.HeaderText = "PacketLoss";
-            packetLossPorcentageDataGridViewTextBoxColumn.Name = "packetLossPorcentageDataGridViewTextBoxColumn";
-            packetLossPorcentageDataGridViewTextBoxColumn.ReadOnly = true;
             // 
             // AddressBindingSource
             // 
@@ -188,6 +159,46 @@
             ToolStripClearList.Size = new Size(122, 22);
             ToolStripClearList.Text = "Clear List";
             // 
+            // isActiveDataGridViewCheckBoxColumn
+            // 
+            isActiveDataGridViewCheckBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            isActiveDataGridViewCheckBoxColumn.DataPropertyName = "IsActive";
+            isActiveDataGridViewCheckBoxColumn.HeaderText = "Is Active";
+            isActiveDataGridViewCheckBoxColumn.Name = "isActiveDataGridViewCheckBoxColumn";
+            isActiveDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // DnsName
+            // 
+            DnsName.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            DnsName.DataPropertyName = "DnsName";
+            DnsName.HeaderText = "Dns Name";
+            DnsName.Name = "DnsName";
+            DnsName.ReadOnly = true;
+            // 
+            // Ip
+            // 
+            Ip.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            Ip.DataPropertyName = "Ip";
+            Ip.HeaderText = "Ip";
+            Ip.Name = "Ip";
+            Ip.ReadOnly = true;
+            // 
+            // totalPingsSentDataGridViewTextBoxColumn
+            // 
+            totalPingsSentDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            totalPingsSentDataGridViewTextBoxColumn.DataPropertyName = "TotalPingsSent";
+            totalPingsSentDataGridViewTextBoxColumn.HeaderText = "Pings Sent";
+            totalPingsSentDataGridViewTextBoxColumn.Name = "totalPingsSentDataGridViewTextBoxColumn";
+            totalPingsSentDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // totalPingsReceivedDataGridViewTextBoxColumn
+            // 
+            totalPingsReceivedDataGridViewTextBoxColumn.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            totalPingsReceivedDataGridViewTextBoxColumn.DataPropertyName = "TotalPingsReceived";
+            totalPingsReceivedDataGridViewTextBoxColumn.HeaderText = "Pings Received";
+            totalPingsReceivedDataGridViewTextBoxColumn.Name = "totalPingsReceivedDataGridViewTextBoxColumn";
+            totalPingsReceivedDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // FormMainScreen
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
@@ -229,5 +240,11 @@
         private DataGridViewTextBoxColumn packetLossPorcentageDataGridViewTextBoxColumn;
         private ToolStripMenuItem addressListToolStripMenuItem;
         private ToolStripMenuItem ToolStripClearList;
+        private DataGridViewTextBoxColumn addressDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn isActiveDataGridViewCheckBoxColumn;
+        private DataGridViewTextBoxColumn DnsName;
+        private DataGridViewTextBoxColumn Ip;
+        private DataGridViewTextBoxColumn totalPingsSentDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn totalPingsReceivedDataGridViewTextBoxColumn;
     }
 }

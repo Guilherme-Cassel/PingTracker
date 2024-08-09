@@ -1,4 +1,5 @@
-﻿
+﻿using PingTracker.Model;
+
 namespace PingTracker;
 
 public partial class AddressZoom : Form
@@ -9,13 +10,11 @@ public partial class AddressZoom : Form
         InitializeComponent();
         Address = address;
         LoadView();
-
-        Address.PropertyChanged += (a, s) => LoadView();
     }
 
     private void LoadView()
     {
-        textBox1.Text = Address.Ip;
-        textBox2.Text = Address.DnsName;
+        //textBox1.Text = Address.Ip;
+        //textBox2.Text = Address.DnsName;
     }
 }
