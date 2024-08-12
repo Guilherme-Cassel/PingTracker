@@ -28,64 +28,125 @@
         /// </summary>
         private void InitializeComponent()
         {
-            textBox1 = new TextBox();
+            TextBoxIP = new TextBox();
             label1 = new Label();
-            label2 = new Label();
-            textBox2 = new TextBox();
             LogRichTextBox = new RichTextBox();
+            label2 = new Label();
+            TextBoxDnsName = new TextBox();
+            label3 = new Label();
+            TextBoxPacketLoss = new TextBox();
+            label4 = new Label();
+            TextBoxActive = new TextBox();
             SuspendLayout();
             // 
-            // textBox1
+            // TextBoxIP
             // 
-            textBox1.Location = new Point(24, 49);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 0;
+            TextBoxIP.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TextBoxIP.Location = new Point(12, 45);
+            TextBoxIP.Name = "TextBoxIP";
+            TextBoxIP.ReadOnly = true;
+            TextBoxIP.Size = new Size(120, 29);
+            TextBoxIP.TabIndex = 0;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(24, 31);
+            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label1.Location = new Point(12, 21);
             label1.Name = "label1";
-            label1.Size = new Size(62, 15);
+            label1.Size = new Size(83, 21);
             label1.TabIndex = 1;
             label1.Text = "IP Address";
+            // 
+            // LogRichTextBox
+            // 
+            LogRichTextBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            LogRichTextBox.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            LogRichTextBox.Location = new Point(12, 137);
+            LogRichTextBox.Name = "LogRichTextBox";
+            LogRichTextBox.ReadOnly = true;
+            LogRichTextBox.Size = new Size(560, 272);
+            LogRichTextBox.TabIndex = 4;
+            LogRichTextBox.Text = "";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(24, 92);
+            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label2.Location = new Point(12, 77);
             label2.Name = "label2";
-            label2.Size = new Size(65, 15);
-            label2.TabIndex = 3;
+            label2.Size = new Size(88, 21);
+            label2.TabIndex = 6;
             label2.Text = "DNS Name";
             // 
-            // textBox2
+            // TextBoxDnsName
             // 
-            textBox2.Location = new Point(24, 110);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 2;
+            TextBoxDnsName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TextBoxDnsName.Location = new Point(12, 101);
+            TextBoxDnsName.Name = "TextBoxDnsName";
+            TextBoxDnsName.ReadOnly = true;
+            TextBoxDnsName.Size = new Size(120, 29);
+            TextBoxDnsName.TabIndex = 5;
             // 
-            // LogRichTextBox
+            // label3
             // 
-            LogRichTextBox.Location = new Point(20, 154);
-            LogRichTextBox.Name = "LogRichTextBox";
-            LogRichTextBox.Size = new Size(766, 278);
-            LogRichTextBox.TabIndex = 4;
-            LogRichTextBox.Text = "";
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label3.Location = new Point(166, 77);
+            label3.Name = "label3";
+            label3.Size = new Size(89, 21);
+            label3.TabIndex = 10;
+            label3.Text = "Packet Loss";
+            // 
+            // TextBoxPacketLoss
+            // 
+            TextBoxPacketLoss.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TextBoxPacketLoss.Location = new Point(166, 101);
+            TextBoxPacketLoss.Name = "TextBoxPacketLoss";
+            TextBoxPacketLoss.ReadOnly = true;
+            TextBoxPacketLoss.Size = new Size(120, 29);
+            TextBoxPacketLoss.TabIndex = 9;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label4.Location = new Point(166, 21);
+            label4.Name = "label4";
+            label4.Size = new Size(52, 21);
+            label4.TabIndex = 8;
+            label4.Text = "Status";
+            // 
+            // TextBoxActive
+            // 
+            TextBoxActive.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            TextBoxActive.Location = new Point(166, 45);
+            TextBoxActive.Name = "TextBoxActive";
+            TextBoxActive.ReadOnly = true;
+            TextBoxActive.Size = new Size(120, 29);
+            TextBoxActive.TabIndex = 7;
             // 
             // AddressZoom
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(LogRichTextBox);
+            BackColor = Color.White;
+            ClientSize = new Size(584, 421);
+            Controls.Add(label3);
+            Controls.Add(TextBoxPacketLoss);
+            Controls.Add(label4);
+            Controls.Add(TextBoxActive);
             Controls.Add(label2);
-            Controls.Add(textBox2);
+            Controls.Add(TextBoxDnsName);
+            Controls.Add(LogRichTextBox);
             Controls.Add(label1);
-            Controls.Add(textBox1);
+            Controls.Add(TextBoxIP);
+            MaximizeBox = false;
+            MaximumSize = new Size(600, 460);
             Name = "AddressZoom";
+            ShowIcon = false;
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "AddressZoom";
             ResumeLayout(false);
             PerformLayout();
@@ -93,10 +154,14 @@
 
         #endregion
 
-        private TextBox textBox1;
+        private TextBox TextBoxIP;
         private Label label1;
-        private Label label2;
-        private TextBox textBox2;
         private RichTextBox LogRichTextBox;
+        private Label label2;
+        private TextBox TextBoxDnsName;
+        private Label label3;
+        private TextBox TextBoxPacketLoss;
+        private Label label4;
+        private TextBox TextBoxActive;
     }
 }

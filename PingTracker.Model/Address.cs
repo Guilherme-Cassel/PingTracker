@@ -53,12 +53,14 @@ public class Address : IPAddress
         }
     }
 
-    public double CalculatePacketLoss()
+    public string CalculatePacketLoss()
     {
         if (TotalPingsSent == 0)
-            return 0.0;
+            return "0%";
 
         int lostPackets = TotalPingsSent - TotalPingsReceived;
-        return (double)lostPackets / TotalPingsSent * 100;
+        var value = (double)lostPackets / TotalPingsSent * 100;
+
+        return $"{value:F2}%";
     }
 }
