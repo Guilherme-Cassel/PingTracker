@@ -32,6 +32,7 @@
             label1 = new Label();
             label2 = new Label();
             textBox2 = new TextBox();
+            LogRichTextBox = new RichTextBox();
             SuspendLayout();
             // 
             // textBox1
@@ -66,11 +67,20 @@
             textBox2.Size = new Size(100, 23);
             textBox2.TabIndex = 2;
             // 
+            // LogRichTextBox
+            // 
+            LogRichTextBox.Location = new Point(20, 154);
+            LogRichTextBox.Name = "LogRichTextBox";
+            LogRichTextBox.Size = new Size(766, 278);
+            LogRichTextBox.TabIndex = 4;
+            LogRichTextBox.Text = "";
+            // 
             // AddressZoom
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(LogRichTextBox);
             Controls.Add(label2);
             Controls.Add(textBox2);
             Controls.Add(label1);
@@ -87,5 +97,6 @@
         private Label label1;
         private Label label2;
         private TextBox textBox2;
+        private RichTextBox LogRichTextBox;
     }
 }

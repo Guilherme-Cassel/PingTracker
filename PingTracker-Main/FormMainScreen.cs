@@ -28,12 +28,12 @@ public partial class FormMainScreen : Form
 
     private void ToolStripStopAll_Click(object? sender, EventArgs e)
     {
-        PingManager.StopPinging();
+        PingManager.Pause();
     }
 
     private void ToolStripStartAll_Click(object? sender, EventArgs e)
     {
-        PingManager.StartPinging();
+        PingManager.Resume();
     }
 
     private void AddressesDataGrid_DoubleClick(object? sender, EventArgs e)

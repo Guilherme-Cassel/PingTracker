@@ -9,13 +9,7 @@ public class PingManager : PingModel
 
     public PingManager() : base()
     {
-        _manager = this;
-        StartPinging();
-    }
-
-    public override void StartPinging()
-    {
-        base.StartPinging();
+        base._manager = this;
         _ = RunPingingLoopAsync();
     }
 
@@ -31,13 +25,13 @@ public class PingManager : PingModel
 
     private async Task RunPingingLoopAsync()
     {
-
-
-        while (!CancelationTokenSource.Token.IsCancellationRequested)
+        while (true)
         {
+            await Task.Run(mrse.WaitOne);
+
             if (addresses.Count <= 0 || !addresses.Any(x => x.IsActive))
             {
-                await Task.Delay(1000, CancelationTokenSource.Token);
+                await Task.Delay(500);
                 continue;
             }
 
@@ -54,10 +48,10 @@ public class PingManager : PingModel
 
             foreach (var (address, success) in results.Where(x => !x.Item2))
             {
-                OnPingFailed?.Invoke(address);
+                OnPingFailed(address);
             }
 
-            await Task.Delay(1000, CancelationTokenSource.Token);
+            await Task.Delay(1000);
         }
     }
 

@@ -14,7 +14,8 @@ public partial class AddressZoom : Form
 
     private void LoadView()
     {
-        //textBox1.Text = Address.Ip;
-        //textBox2.Text = Address.DnsName;
+        textBox1.Text = Address.Ip;
+        textBox2.Text = Address.DnsName;
+        LogRichTextBox.Text = Address.Log.ToString();
     }
 }
