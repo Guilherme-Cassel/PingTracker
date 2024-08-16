@@ -9,7 +9,23 @@ public partial class AddressZoom : Form
     {
         InitializeComponent();
         Address = address;
-        UpdateLoop();
+        ButtonStartStop.Click += ButtonStartStop_Click;
+        ButtonExportLog.Click += ButtonExportLog_Click;
+        UpdateInfo();
+    }
+
+    private void ButtonExportLog_Click(object? sender, EventArgs e)
+    {
+        using var fbd = new FolderBrowserDialog();
+        DialogResult result = fbd.ShowDialog();
+        string path = Path.Combine(fbd.SelectedPath, $"");
+        File.WriteAllTextAsync(, Address.Log.ToString());
+        File.Open();
+    }
+
+    private void ButtonStartStop_Click(object? sender, EventArgs e)
+    {
+        Address.IsActive = !Address.IsActive;
     }
 
     private void LoadView()
@@ -21,7 +37,7 @@ public partial class AddressZoom : Form
         LogRichTextBox.Text = Address.Log.ToString();
     }
 
-    private async void UpdateLoop()
+    private async void UpdateInfo()
     {
         try
         {
@@ -34,7 +50,9 @@ public partial class AddressZoom : Form
         finally
         {
             await Task.Delay(1000);
-            UpdateLoop();
+            UpdateInfo();
         }
     }
+
+
 }

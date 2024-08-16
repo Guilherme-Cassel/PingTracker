@@ -37,6 +37,8 @@
             TextBoxPacketLoss = new TextBox();
             label4 = new Label();
             TextBoxActive = new TextBox();
+            ButtonStartStop = new Button();
+            ButtonExportLog = new Button();
             SuspendLayout();
             // 
             // TextBoxIP
@@ -126,12 +128,34 @@
             TextBoxActive.Size = new Size(120, 29);
             TextBoxActive.TabIndex = 7;
             // 
+            // ButtonStartStop
+            // 
+            ButtonStartStop.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ButtonStartStop.Location = new Point(452, 38);
+            ButtonStartStop.Name = "ButtonStartStop";
+            ButtonStartStop.Size = new Size(120, 45);
+            ButtonStartStop.TabIndex = 11;
+            ButtonStartStop.Text = "Start / Stop";
+            ButtonStartStop.UseVisualStyleBackColor = true;
+            // 
+            // ButtonExportLog
+            // 
+            ButtonExportLog.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ButtonExportLog.Location = new Point(452, 86);
+            ButtonExportLog.Name = "ButtonExportLog";
+            ButtonExportLog.Size = new Size(120, 45);
+            ButtonExportLog.TabIndex = 12;
+            ButtonExportLog.Text = "Export Log";
+            ButtonExportLog.UseVisualStyleBackColor = true;
+            // 
             // AddressZoom
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(584, 421);
+            Controls.Add(ButtonExportLog);
+            Controls.Add(ButtonStartStop);
             Controls.Add(label3);
             Controls.Add(TextBoxPacketLoss);
             Controls.Add(label4);
@@ -163,5 +187,7 @@
         private TextBox TextBoxPacketLoss;
         private Label label4;
         private TextBox TextBoxActive;
+        private Button ButtonStartStop;
+        private Button ButtonExportLog;
     }
 }
